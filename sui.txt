@@ -1,1 +1,1095 @@
+Exp-1
 
+hello.js
+--------
+function App()
+{
+    return(
+        <div classname="App">
+            <h1>Hello World</h1>
+        </div>
+    );
+}
+export default App;
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './hello';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+reportWebVitals();
+-----------------------------------------------------------------------------
+Exp-2
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+function timers()
+{
+    var ob=new Date();
+    var d=ob.toDateString();
+    var t=ob.toTimeString();
+    var element=<>
+    <h1>Today date is:{d}</h1>
+    <h1>Time is:{t}</h1>
+    </> 
+    root.render(element);
+}
+setInterval(timers,1000);
+
+root.render(
+    <React.StrictMode>
+      <timers/>
+    </React.StrictMode>
+);
+reportWebVitals();
+---------------------------------------------------------------
+Exp-3
+
+index.js
+------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import Greeting  from './Greeting';
+import Greet  from './Greet';
+import reportWebVitals from './reportWebVitals';
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Greeting name="your name" message="Welcome to ET Department"/>//Functionalprops
+    <Greet name="your name" message="Welcome to Awe Lab"/>//ClassProps
+  </React.StrictMode>
+)
+reportWebVitals();
+
+class component
+-------------
+import React,{Component} from 'react';
+class Greet extends Component{
+    render (){
+        return(
+        <div className='abd'>
+            <h1 id="h1">Hello {this.props.name}</h1>
+            <p id="p">{this.props.message}</p>
+            </div>
+        );
+    }
+}
+export default Greet;
+
+functional component
+-----------------
+import React from 'react';
+function Greeting(props){
+    return(
+        <div className='fprops'>
+            <h1 id="h1">Hello {props.name}</h1>
+            <p id="p">{props.message} </p>
+        </div>
+    );
+}
+export default Greeting;
+--------------------------------------------------------
+Exp-4
+
+exp4.js
+-------
+import React,{Component} from "react";
+class Date1 extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            date:"",
+            time:""
+        }
+
+    }
+    change=()=>{
+        var ob=new Date();
+        var d=ob.toDateString();
+        var t=ob.toTimeString();
+        this.setState({date:d});
+        this.setState({time:t});
+    }
+    render(){
+        return(
+            <div>
+                <button onClick={this.change}>View Date and Time </button>
+                <h3>{this.state.date}</h3>
+                <h4>{this.state.time}</h4>
+            </div>
+        )
+    }
+}
+export default Date1;
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import Date1 from './exp4';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+    <Date1/>
+);
+reportWebVitals();
+ -----------------------------------------------------------------------------
+Exp-5 //see the output in console also
+
+Lifecycle1.js
+-------------
+import {Component} from "react";
+import Lifecycle2 from "./Lifecycle2";
+import Lifecycle_update from "./Lifecycle_update.js";
+class LifeCycle1 extends Component{
+    constructor(props){
+        super(props);
+        this.state={};
+        console.log('Lifecycle1 constructor');
+    }
+    static getDerivedStateFromProps(props,state){
+        console.log('Lifecycle1 getDerivedStateFromProps');
+        return null;
+    }
+    componentDidMount(){
+        console.log('Lifecysle1 componentDidMount');
+    }
+    render(){
+        console.log('Lifecycle1 render');
+        return <div>Lifecycle1
+            <Lifecycle2/>
+            <Lifecycle_update/>
+        </div>
+    }
+}
+export default LifeCycle1;
+
+Lifecycle2.js
+-------------
+import { Component } from "react";
+class Lifecycle2 extends Component{
+    constructor(props){
+        super(props);
+        this.state={};
+        console.log('Lifecycle2 constructor');
+    }
+    static getDerivedStateFromProps(props,state){
+        console.log('Lifecycle2 getDerivedStateFromProps');
+        return null;
+    }
+    componentDidMount(){
+        console.log('Lifecycle2 componentDidMount');
+    }
+    render(){
+        console.log('Lifecycle2 render');
+        return <div>Lifecycle2
+        </div>
+    }
+}
+export default Lifecycle2;
+
+Lifecycle_update.js
+-------------------
+import { Component } from "react";
+class Lifecycle_update extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            cnt:0
+        };
+        console.log('Lifecycle update constructor');
+    }
+    static getDerivedStateFromProps(props,state){
+        console.log('Lifecycle update getDerivedStateFromProps');
+        return null;
+    }
+    componentDidMount(){
+        console.log('Lifecycle update componentDidMount');
+    }
+    shouldComponentUpdate(){
+        console.log('Lifecycle update shouldComponentUpdate');
+        return true;
+    }
+    getSnapshotBeforeUpdate(prevProps,prevState){
+        console.log('Lifecycle update getSnapshotBeforeUpdate');
+        console.log('Befor update count:',prevState);
+        return null;
+    }
+    componentDidUpdate(){
+        console.log('Lifecycle update componentDidUpdate');
+        console.log('After update count:',this.state.cnt);
+    }
+    increment = () => {
+        this.setState((prevState) => ({
+            cnt:prevState.cnt + 1,
+        }));
+    };
+    decrement = () => {
+        this.setState((prevState) => ({
+            cnt:prevState.cnt - 1,
+        }));
+    };
+    render(){
+        console.log('Lifecycle update render');
+        return (
+            <div>
+                <h1>The current count is :{" "}
+                    {this.state.cnt}
+                </h1>
+                <button onClick={this.increment}>Increase</button>
+                <button onClick={this.decrement}>Decrease</button>
+            </div>
+        );
+    }
+}
+export default Lifecycle_update;
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import LifeCycle1 from './Lifecycle1';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+    <React.StrictMode>
+      <LifeCycle1/>
+    </React.StrictMode>
+);
+reportWebVitals();
+-------------------------------------------------------------------------------
+Exp-6
+
+ButtonClickDemo.js
+------------------
+import React,{Component} from 'react';
+class ButtonClickDemo extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            message:'Lets start testing'
+        };
+    }
+    handleDateClick(){
+        this.setState({message:new Date().toString()});
+    }
+    handleGoodByeClick = () => {
+        this.setState({message:'GoodBye'});
+    }
+    render(){
+        return(
+            <div>
+                <h1>{this.state.message}</h1>
+                <button onClick={this.handleDateClick.bind(this)}>Show Date and Time</button>
+                <button onClick={this.handleGoodByeClick}>GoodByeButton</button>
+
+
+            </div>
+        );
+    }
+}
+export default ButtonClickDemo;
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import ButtonClickDemo from './ButtonClickDemo';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+    <React.StrictMode>
+      <ButtonClickDemo/>
+    </React.StrictMode>
+);
+reportWebVitals();
+----------------------------------------------------------------------------------
+Exp-7
+
+calc.js
+-------
+import React,{useState} from 'react';
+import './Calculator.css';
+const Calculator=()=>{
+    const[input,setInput]=useState(' ');
+    const[result,setResult]=useState(' ');
+    const handleClick=(value)=>{
+        if(value==='='){
+            try{
+                setResult(eval(input));
+            }
+            catch(e){
+                setResult('Error');
+            }
+        }
+        else if(value==='C'){
+            setInput(' ');
+            setResult('Error');
+        }
+        else if(value==='X'){
+            setInput(input.slice(0,-1));
+        }
+        else{
+            setInput(input+value);
+        }
+    };
+    return(
+        <div className="calculator">
+            <div className="display">
+                <div className="input">{input}</div>
+                <div className="result">{result}</div>
+            </div>
+            <div className="buttons">
+                {['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C','X'].map((value)=>(
+                    <button key={value} onClick={()=>
+                        handleClick(value)
+                    }>{value}</button>
+                ))}
+            </div>
+        </div>
+    );
+};
+export default Calculator;
+
+Calculator.css
+--------------
+.calculator{
+    width:320px;
+    margin:50px auto;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    background-color:#f0f0f0;
+}
+.display{
+    margin-bottom:20px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    background-color:#fff;
+    text-align:right;
+}
+.input,.result{
+    font-size: 1.5em;
+    margin: 5px 0;
+    padding-right: 10px;
+}
+.buttons{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+}
+.buttons button{
+    padding: 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3ms;
+}
+.buttons button:hover{
+    background-color: #0056b3;
+}
+.buttons button:active{
+    background-color: #dc3545;
+}
+.buttons button:nth-child(16){
+    background-color: #bd2130;
+}
+.buttons button:nth-child(17){
+    background-color: #ffc107;
+}
+.buttons button:nthchild(17):hover{
+    background-color: #e0a800;
+}
+.buttons button:nth-child(17):active{
+    background-color: #c69500;
+}
+
+App.js
+------
+import logo from './logo.svg';
+import './App.css';
+import Calculator from './calc';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Calculator</h1>
+      <Calculator/>
+    </div>
+  );
+}
+
+export default App;
+
+index.js
+--------
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import Calculator from './calc';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+    <Calculator/>
+  </React.StrictMode>
+);
+reportWebVitals();
+---------------------------------------------------------------------------------
+Exp-8
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import SimpleRegistration from './reg';
+import reportWebVitals from './reportWebVitals';
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <SimpleRegistration/>
+  </React.StrictMode>
+)
+reportWebVitals();
+
+SimpleRegistration.js
+-------------------
+// src/SimpleRegistration.js
+import React, { useState } from 'react';
+
+const SimpleRegistration = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(Registered Successfully!\nUsername: ${formData.username}\nEmail: ${formData.email});
+  };
+
+  return (
+    <div align="center">
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+        </div>
+        <br></br>
+        <div>
+          <label>Email:</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+        </div>
+        <br></br>
+        <div>
+          <label>Password:</label>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+        </div>
+        <br></br>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  );
+};
+
+export default SimpleRegistration;
+----------------------------------------------------------------------------------
+Exp-9
+
+Home.js
+-------
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const Home = () => {
+  const books = [
+    { id: 1, title: 'The Great Gatsby', description: 'A classic novel by F. Scott Fitzgerald.',image:'/tgg.png'},
+    { id: 2, title: '1984', description: 'A dystopian novel by George Orwell.' , image:'/1984.png'},
+    { id: 3, title: 'To Kill a Mockingbird', description: 'A novel by Harper Lee.' ,image:'/tkamb.png' },
+  ];
+
+  const gridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+    gap: '16px',
+    padding: '16px',
+  };
+
+  // Inline styles for individual book items
+  const itemStyle = {
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    textAlign: 'center',
+    backgroundColor: '#f9f9f9',
+    padding: '16px',
+  };
+
+  const imgStyle = {
+    maxWidth: '100%',
+    height: 'auto',
+  };
+
+  return (
+    <div>
+      <h1>Book Store</h1>
+      <div style={gridStyle}>
+        {books.map((book) => (
+          <div key={book.id} style={itemStyle}>
+            <img src={book.image} alt={book.title} style={imgStyle} />
+            <Link to={`/product/${book.id}`} style={{ textDecoration: 'none', color: '#333' }}>
+              <h2>{book.title}</h2>
+            </Link>
+            <p>{book.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );   
+};
+
+export default Home;
+
+Product.js
+----------
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+const Product = () => {
+  const { id } = useParams();
+  const books = [
+    { id: 1, title: 'The Great Gatsby', description: 'A classic novel by F. Scott Fitzgerald.' },
+    { id: 2, title: '1984', description: 'A dystopian novel by George Orwell.' },
+    { id: 3, title: 'To Kill a Mockingbird', description: 'A novel by Harper Lee.' },
+  ];
+  const book = books.find(b => b.id === parseInt(id));
+
+  return (
+    <div>
+      <h1>{book.title}</h1>
+      <p>{book.description}</p>
+      <button>Add to Cart</button>
+    </div>
+  );
+};
+
+export default Product;
+
+cart.js
+-------
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+const Cart = () => {
+  const [cart, setCart] = useState([
+    { id: 1, title: 'The Great Gatsby', quantity: 1 },
+    { id: 2, title: '1984', quantity: 2 },
+  ]);
+
+  return (
+    <div>
+      <h1>Your Cart</h1>
+      <ul>
+        {cart.map((item) => (
+          <li key={item.id}>
+            {item.title} - Quantity: {item.quantity}
+          </li>
+        ))}
+      </ul>
+      <Link to="/checkout">
+        <button>Proceed to Checkout</button>
+      </Link>
+    </div>
+  );
+};
+
+export default Cart;
+
+Checkout.js
+-----------
+import React, { useState } from 'react';
+
+const Checkout = () => {
+  const [cart] = useState([
+    { id: 1, title: 'The Great Gatsby', quantity: 1 },
+    { id: 2, title: '1984', quantity: 2 },
+  ]);
+
+  return (
+    <div>
+      <h1>Checkout</h1>
+      <h2>Invoice</h2>
+      <ul>
+        {cart.map((item) => (
+          <li key={item.id}>
+            {item.title} - Quantity: {item.quantity}
+          </li>
+        ))}
+      </ul>
+      <button onClick={() => window.print()}>Print Invoice</button>
+    </div>
+  );
+};
+
+export default Checkout;
+
+App.js
+------
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Bookstore/Home';
+import Product from './Bookstore/Product';
+import Cart from './Bookstore/cart';
+import Checkout from './Bookstore/Checkout';
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
+---------------------------------------------------------------------------------
+Exp-10
+
+App.js
+------
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import ProductPage from './pages/ProductPage';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+
+function App() {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (book) => {
+    setCart([...cart, { ...book, quantity: 1 }]);
+  };
+
+  const updateQuantity = (bookId, quantity) => {
+    setCart(cart.map(item => item.id === bookId ? { ...item, quantity } : item));
+  };
+
+  const removeFromCart = (bookId) => {
+    setCart(cart.filter(item => item.id !== bookId));
+  };
+
+  return (
+    <div>
+      <nav>
+        <Link to="/">Home</Link><br></br><br>
+        </br>
+        <Link to="/cart">Cart ({cart.length})</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home addToCart={addToCart} />} />
+        <Route path="/product/:id" element={<ProductPage addToCart={addToCart} />} />
+        <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} />} />
+        <Route path="/checkout" element={<Checkout cart={cart} />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
+Cart.js
+------
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+function Cart({ cart, updateQuantity, removeFromCart }) {
+  const handleQuantityChange = (e, bookId) => {
+    updateQuantity(bookId, parseInt(e.target.value));
+  };
+
+  return (
+    <div>
+      <h1>Your Cart</h1>
+      {cart.length === 0 ? (
+        <p>Cart is empty. <Link to="/">Go back to store</Link></p>
+      ) : (
+        <ul>
+          {cart.map(item => (
+            <li key={item.id}>
+              {item.title} - ${item.price} x
+              <input
+                type="number"
+                value={item.quantity}
+                min="1"
+                onChange={(e) => handleQuantityChange(e, item.id)}
+              />
+              <button onClick={() => removeFromCart(item.id)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Link to="/checkout">Proceed to Checkout</Link>
+    </div>
+  );
+}
+
+export default Cart;
+
+Checkout.js
+----------
+import React from 'react';
+
+function Checkout({ cart }) {
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  return (
+    <div>
+      <h1>Checkout</h1>
+      <h2>Invoice</h2>
+      <ul>
+        {cart.map(item => (
+          <li key={item.id}>
+            {item.title} - ${item.price} x {item.quantity} = ${item.price * item.quantity}
+          </li>
+        ))}
+      </ul>
+      <h3>Total: ${total}</h3>
+      <button onClick={() => window.print()}>Print Invoice</button>
+    </div>
+  );
+}
+
+export default Checkout;
+
+Home.js
+-------
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const books = [
+  { id: 1, title: 'Book A', price: 10 },
+  { id: 2, title: 'Book B', price: 15 },
+  { id: 3, title: 'Book C', price: 20 },
+];
+
+function Home({ addToCart }) {
+  return (
+    <div>
+      <h1>Bookstore</h1>
+      <ul>
+        {books.map(book => (
+          <li key={book.id}>
+            <Link to={`/product/${book.id}`}>{book.title}</Link> - ${book.price}
+            <button onClick={() => addToCart(book)}>Add to Cart</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Home;
+
+ProductPage.js
+------------
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+const books = [
+  { id: 1, title: 'Book A', price: 10, description: 'Description of Book A' },
+  { id: 2, title: 'Book B', price: 15, description: 'Description of Book B' },
+  { id: 3, title: 'Book C', price: 20, description: 'Description of Book C' },
+];
+
+function ProductPage({ addToCart }) {
+  const { id } = useParams();
+  const book = books.find(b => b.id === parseInt(id));
+
+  return (
+    <div>
+      <h1>{book.title}</h1>
+      <p>{book.description}</p>
+      <p>Price: ${book.price}</p>
+      <button onClick={() => addToCart(book)}>Add to Cart</button>
+    </div>
+  );
+}
+
+export default ProductPage;
+--------------------------------------------------------------------------
+Exp-11
+
+WeatherApp.js
+--------------
+import React, { useState, useEffect } from 'react';
+import { getWeatherData, getHistoricalData } from './WeatherService';
+import { Line } from 'react-chartjs-2';
+
+const WeatherApp = () => {
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [historicalWeather, setHistoricalWeather] = useState([]);
+  const [city, setCity] = useState('');  // Initialize city with empty string
+  const [inputCity, setInputCity] = useState('New York'); // Default city input
+  
+  useEffect(() => {
+    const fetchWeather = async () => {
+      const current = await getWeatherData(inputCity);
+      const historical = await getHistoricalData(inputCity);
+      setCurrentWeather(current);
+      setHistoricalWeather(historical);
+    };
+    
+    fetchWeather();
+  }, [inputCity]);
+
+  // Handler for city input change
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  // Handler for form submission
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setInputCity(city); // Update the inputCity state to trigger a new fetch
+  };
+
+  const historicalChartData = {
+    labels: historicalWeather.map((data) => new Date(data.current.dt * 1000).toLocaleDateString()),
+    datasets: [{
+      label: 'Temperature (°C)',
+      data: historicalWeather.map((data) => data.current.temp - 273.15), // Convert Kelvin to Celsius
+      borderColor: 'rgba(75,192,192,1)',
+      fill: false
+    }]
+  };
+
+  return (
+    <div>
+      <h1>Weather App</h1>
+      
+      {/* Input form for city name */}
+      <form onSubmit={handleFormSubmit}>
+        <input 
+          type="text" 
+          value={city} 
+          onChange={handleCityChange} 
+          placeholder="Enter city" 
+        />
+        <button type="submit">Get Weather</button>
+      </form>
+
+      {currentWeather && (
+        <div>
+          <h2>Current Weather in {currentWeather.name}</h2>
+          <p>Temperature: {(currentWeather.main.temp - 273.15).toFixed(2)} °C</p>
+          <p>Weather: {currentWeather.weather[0].description}</p>
+        </div>
+      )}
+
+      {historicalWeather.length > 0 && (
+        <div>
+          <h2>Historical Weather</h2>
+          <Line data={historicalChartData} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default WeatherApp;
+
+WeatherService.js
+----------------
+import axios from 'axios';
+
+const API_KEY = 'd09c179e61f7657174057032d4532734';
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+
+// Function to fetch current weather data
+export const getWeatherData = async (city) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/weather`, {
+      params: {
+        q: city,
+        appid: API_KEY,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    if (error.response && error.response.status === 401) {
+      alert('Unauthorized: Invalid API Key');
+    }
+    return null;
+  }
+};
+
+// Function to fetch historical weather data using One Call API
+export const getHistoricalData = async (city) => {
+  try {
+    // First, get the coordinates for the city
+    const cityData = await getWeatherData(city);
+    if (!cityData) return [];
+
+    const { coord } = cityData;
+
+    const timestamps = [
+      Math.floor(Date.now() / 1000) - 86400, // 1 day ago
+      Math.floor(Date.now() / 1000) - 86400 * 2, // 2 days ago
+      Math.floor(Date.now() / 1000) - 86400 * 3, // 3 days ago
+    ];
+
+    const historicalData = await Promise.all(
+      timestamps.map(async (timestamp) => {
+        const response = await axios.get(`${BASE_URL}/onecall/timemachine`, {
+          params: {
+            lat: coord.lat,
+            lon: coord.lon,
+            dt: timestamp,
+            appid: API_KEY,
+          },
+        });
+        return response.data;
+      })
+    );
+
+    return historicalData;
+  } catch (error) {
+    console.error('Error fetching historical weather data:', error);
+    return [];
+  }
+};
+--------------------------------------------------------------------------
+Exp-12
+
+App.js
+------
+import React, { useState } from 'react';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
+
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (task) => {
+    const newTodo = { id: Date.now(), task, completed: false };
+    setTodos([...todos, newTodo]);
+  };
+
+  const toggleComplete = (id) => {
+    setTodos(todos.map(todo => (
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    )));
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  return (
+    <div className="App">
+      <h1>TODO App</h1>
+      <TodoForm addTodo={addTodo} />
+      <TodoList todos={todos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} />
+    </div>
+  );
+}
+
+export default App;
+
+TodoForm.js
+----------
+import React, { useState } from 'react';
+
+function TodoForm({ addTodo }) {
+  const [task, setTask] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (task.trim()) {
+      addTodo(task);
+      setTask('');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+        placeholder="Add new task"
+      />
+      <button type="submit">Add Task</button>
+    </form>
+  );
+}
+
+export default TodoForm;
+
+TodoList.js
+---------
+import React from 'react';
+
+function TodoList({ todos, toggleComplete, deleteTodo }) {
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+          {todo.task}
+          <button onClick={() => toggleComplete(todo.id)}>
+            {todo.completed ? 'Undo' : 'Complete'}
+          </button>
+          <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default TodoList;
